@@ -13,9 +13,9 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
+#[Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
+#[Rr]elease/
 [Rr]eleases/
 x64/
 x86/
@@ -328,3 +328,15 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# Altered build folders to work with exceptions
+Debug/*
+Debug/*/*
+Release/*
+Release/*/*
+
+# Exceptions for SFML
+!Debug/*.dll
+!Release/*.dll
+!SFML*/*
+!SFML*/*/*
