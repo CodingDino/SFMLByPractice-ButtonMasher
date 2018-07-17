@@ -83,6 +83,23 @@ int main()
 	scoreText.setFillColor(sf::Color::White);
 	scoreText.setPosition(30,30);
 
+	// Timer
+	sf::Text timerText;
+	timerText.setFont(gameFont);
+	timerText.setString("Time Remaining: 0");
+	timerText.setCharacterSize(16);
+	timerText.setFillColor(sf::Color::White);
+	timerText.setPosition(gameWindow.getSize().x - timerText.getLocalBounds().width - 30, 30);
+
+	// Create a time value to store the total time limit for our game
+	sf::Time timeLimit = sf::seconds(10.0f);
+	// Create a timer to store the time remaining for our game
+	sf::Time timeRemaining = timeLimit;
+
+	// Game Clock
+	// Create a clock to track time passed each frame in the game
+	sf::Clock gameClock;
+
 	// -----------------------------------------------
 	// Game Loop
 	// -----------------------------------------------
@@ -110,6 +127,13 @@ int main()
 		// -----------------------------------------------
 		// Update Section
 		// -----------------------------------------------
+		// Get the time passed since the last frame and restart our game clock
+		sf::Time frameTime = gameClock.restart();
+		// Update our time remaining based on how much time passed last frame
+		timeRemaining = timeRemaining - frameTime;
+		// Update our time display based on our time remaining
+		timerText.setString("Time Remaining: " + std::to_string((int)timeRemaining.asSeconds()));
+		// Update our score display text based on our current numerical score
 		scoreText.setString("Score: " + std::to_string(score));
 
 		// -----------------------------------------------
@@ -123,6 +147,7 @@ int main()
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
 		gameWindow.draw(scoreText);
+		gameWindow.draw(timerText);
 
 		// Display the window contents on the screen
 		gameWindow.display();
