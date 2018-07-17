@@ -110,6 +110,23 @@ int main()
 	// Associate our click sound with the click sound buffer
 	clickSound.setBuffer(clickBuffer);
 
+	// Game state
+	bool playing = false;
+
+	// Prompt text
+	sf::Text promptText;
+	promptText.setFont(gameFont);
+	promptText.setString("Click the button to start the game!");
+	promptText.setCharacterSize(16);
+	promptText.setFillColor(sf::Color::White);
+	promptText.setPosition(gameWindow.getSize().x / 2 - promptText.getLocalBounds().width / 2, 200);
+
+	// Game Over Audio
+	sf::SoundBuffer gameOverBuffer;
+	gameOverBuffer.loadFromFile("audio/gameover.ogg");
+	sf::Sound gameOverSound;
+	gameOverSound.setBuffer(gameOverBuffer);
+
 	// -----------------------------------------------
 	// Game Loop
 	// -----------------------------------------------
@@ -137,8 +154,21 @@ int main()
 					// Play a click sound
 					clickSound.play();
 
-					// Add to the score
-					score = score + 1;
+					// If the game is currently playing
+					if (playing == true)
+					{
+						// Add to the score
+						score = score + 1;
+					}
+					else
+					{
+						// We aren't playing, so we should start!
+						playing = true;
+						// Re-initialise the game
+						score = 0;
+						timeRemaining = timeLimit;
+						promptText.setString("Click the button as fast as you can!");
+					}
 				}
 			}
 
@@ -155,8 +185,22 @@ int main()
 		// -----------------------------------------------
 		// Get the time passed since the last frame and restart our game clock
 		sf::Time frameTime = gameClock.restart();
-		// Update our time remaining based on how much time passed last frame
-		timeRemaining = timeRemaining - frameTime;
+		// Are we currently playing?
+		if (playing == true)
+		{
+			// Update our time remaining based on how much time passed last frame
+			timeRemaining = timeRemaining - frameTime;
+			// Are we out of time?
+			if (timeRemaining.asSeconds() <= 0)
+			{
+				// Set playing state to false
+				playing = false;
+				// Update the prompt
+				promptText.setString("Your final score was: "+std::to_string((int)timeRemaining.asSeconds()) +". Click the button to start a new game!");
+				// Play jingle
+				gameOverSound.play();
+			}
+		}
 		// Update our time display based on our time remaining
 		timerText.setString("Time Remaining: " + std::to_string((int)timeRemaining.asSeconds()));
 		// Update our score display text based on our current numerical score
@@ -174,6 +218,7 @@ int main()
 		gameWindow.draw(authorText);
 		gameWindow.draw(scoreText);
 		gameWindow.draw(timerText);
+		gameWindow.draw(promptText);
 
 		// Display the window contents on the screen
 		gameWindow.display();
