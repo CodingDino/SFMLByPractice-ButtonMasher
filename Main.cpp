@@ -8,15 +8,26 @@
 int main()
 {
 	// Declare our SFML window, called gameWindow
-	sf::Window gameWindow;
+	sf::RenderWindow gameWindow;
 	// Set up the SFML window, passing the dimmensions and the window name
 	gameWindow.create(sf::VideoMode::getDesktopMode(), "Button Masher", sf::Style::Titlebar | sf::Style::Close);
 
 	// -----------------------------------------------
 	// Game Setup
 	// -----------------------------------------------
+	// Declare a texture variable called buttonTexture
 	sf::Texture buttonTexture;
-	buttonTexture.loadFromFile("button.png");
+	// Load up our texture from a file path
+	buttonTexture.loadFromFile("graphics/button.png");
+	// Create a sprite variable called buttonSprite
+	sf::Sprite buttonSprite;
+	// Link our sprite to the texture we created previously, so it knows what to draw
+	buttonSprite.setTexture(buttonTexture);
+	// Set our button's position to the centre of the screen.
+	buttonSprite.setPosition(
+		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2, 
+		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2
+	);
 
 	// -----------------------------------------------
 	// Game Loop
@@ -50,7 +61,15 @@ int main()
 		// -----------------------------------------------
 		// Draw Section
 		// -----------------------------------------------
-		// TODO: Draw graphics
+		// Clear the window to a single colour
+		gameWindow.clear(sf::Color::Black);
+
+		// Draw everything to the window
+		gameWindow.draw(buttonSprite);
+		// TODO: Draw more stuff
+
+		// Display the window contents on the screen
+		gameWindow.display();
 
 	} // End of Game Loop
 	return 0;
