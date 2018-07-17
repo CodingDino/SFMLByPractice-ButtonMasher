@@ -3,6 +3,8 @@
 #include <SFML/Window.hpp>	
 // Library needed for using sprites and textures
 #include <SFML/Graphics.hpp>
+// Library needed for playing music and sound effects
+#include <SFML/Audio.hpp>
 
 // The main() Function - entry point for our program
 int main()
@@ -15,6 +17,7 @@ int main()
 	// -----------------------------------------------
 	// Game Setup
 	// -----------------------------------------------
+	// Button Sprite
 	// Declare a texture variable called buttonTexture
 	sf::Texture buttonTexture;
 	// Load up our texture from a file path
@@ -28,6 +31,45 @@ int main()
 		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2, 
 		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2
 	);
+
+	// Game Music
+	// Declare a music variable called gameMusic
+	sf::Music gameMusic;
+	// Load up our audio from a file path
+	gameMusic.openFromFile("audio/music.ogg");
+	// Start our music playing
+	gameMusic.play();
+
+	// Game Font
+	// Declare a font variable called gameFont
+	sf::Font gameFont;
+	// Load up the font from a file path
+	gameFont.loadFromFile("fonts/mainFont.ttf");
+
+	// Title Text
+	// Declare a text variable called titleText to hold our game title display
+	sf::Text titleText;
+	// Set the font our text should use
+	titleText.setFont(gameFont);
+	// Set the string of text that will be displayed by this text object
+	titleText.setString("Button Masher!");
+	// Set the size of our text, in pixels
+	titleText.setCharacterSize(24);
+	// Set the colour of our text
+	titleText.setFillColor(sf::Color::Cyan);
+	// Set the text style for the text
+	titleText.setStyle(sf::Text::Bold | sf::Text::Italic);
+	// Position our text in the top center of the screen
+	titleText.setPosition(gameWindow.getSize().x / 2 - titleText.getLocalBounds().width / 2, 30);
+
+	// Author Text
+	sf::Text authorText;
+	authorText.setFont(gameFont);
+	authorText.setString("by Sarah Herzog");
+	authorText.setCharacterSize(16);
+	authorText.setFillColor(sf::Color::Magenta);
+	authorText.setStyle(sf::Text::Italic);
+	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 60);
 
 	// -----------------------------------------------
 	// Game Loop
@@ -66,6 +108,8 @@ int main()
 
 		// Draw everything to the window
 		gameWindow.draw(buttonSprite);
+		gameWindow.draw(titleText);
+		gameWindow.draw(authorText);
 		// TODO: Draw more stuff
 
 		// Display the window contents on the screen
