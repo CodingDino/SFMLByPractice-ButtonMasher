@@ -100,6 +100,16 @@ int main()
 	// Create a clock to track time passed each frame in the game
 	sf::Clock gameClock;
 
+	// Click Sound Effect
+	// Create a sound buffer to hold our click sound's file information
+	sf::SoundBuffer clickBuffer;
+	// Tell the click sound buffer where the file is
+	clickBuffer.loadFromFile("audio/buttonclick.ogg");
+	// Create a click sound to hold the information about how the click sound should be played
+	sf::Sound clickSound;
+	// Associate our click sound with the click sound buffer
+	clickSound.setBuffer(clickBuffer);
+
 	// -----------------------------------------------
 	// Game Loop
 	// -----------------------------------------------
@@ -115,6 +125,22 @@ int main()
 		while (gameWindow.pollEvent(gameEvent))
 		{
 			// This section will be repeated for each event waiting to be processed
+
+			// Did the player click the mouse?
+			if (gameEvent.type == sf::Event::MouseButtonPressed)
+			{
+				// Did they click the button sprite?
+				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
+				{
+					// They clicked it!
+
+					// Play a click sound
+					clickSound.play();
+
+					// Add to the score
+					score = score + 1;
+				}
+			}
 
 			// Did the player try to close the window?
 			if (gameEvent.type == sf::Event::Closed)
