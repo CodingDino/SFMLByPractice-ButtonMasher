@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 // Library needed for playing music and sound effects
 #include <SFML/Audio.hpp>
+// Library for manipulating strings of text
+#include <string>
 
 // The main() Function - entry point for our program
 int main()
@@ -71,6 +73,16 @@ int main()
 	authorText.setStyle(sf::Text::Italic);
 	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 60);
 
+	// Score
+	// Declare an integer variable to hold the numerical score for our game to display
+	int score = 0;
+	sf::Text scoreText;
+	scoreText.setFont(gameFont);
+	scoreText.setString("Score: " + std::to_string(score));
+	scoreText.setCharacterSize(16);
+	scoreText.setFillColor(sf::Color::White);
+	scoreText.setPosition(30,30);
+
 	// -----------------------------------------------
 	// Game Loop
 	// -----------------------------------------------
@@ -98,7 +110,7 @@ int main()
 		// -----------------------------------------------
 		// Update Section
 		// -----------------------------------------------
-		// TODO: Update game state
+		scoreText.setString("Score: " + std::to_string(score));
 
 		// -----------------------------------------------
 		// Draw Section
@@ -110,7 +122,7 @@ int main()
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
-		// TODO: Draw more stuff
+		gameWindow.draw(scoreText);
 
 		// Display the window contents on the screen
 		gameWindow.display();
