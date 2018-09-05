@@ -30,7 +30,7 @@ int main()
 	buttonSprite.setTexture(buttonTexture);
 	// Set our button's position to the centre of the screen.
 	buttonSprite.setPosition(
-		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2, 
+		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2,
 		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2
 	);
 
@@ -62,7 +62,7 @@ int main()
 	// Set the text style for the text
 	titleText.setStyle(sf::Text::Bold | sf::Text::Italic);
 	// Position our text in the top center of the screen
-	titleText.setPosition(gameWindow.getSize().x / 2 - titleText.getLocalBounds().width / 2, 30);
+	titleText.setPosition(gameWindow.getSize().x / 2 - titleText.getLocalBounds().width / 2, 100);
 
 	// Author Text
 	sf::Text authorText;
@@ -71,7 +71,7 @@ int main()
 	authorText.setCharacterSize(16);
 	authorText.setFillColor(sf::Color::Magenta);
 	authorText.setStyle(sf::Text::Italic);
-	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 60);
+	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 160);
 
 	// Score
 	// Declare an integer variable to hold the numerical score for our game to display
@@ -81,7 +81,7 @@ int main()
 	scoreText.setString("Score: " + std::to_string(score));
 	scoreText.setCharacterSize(16);
 	scoreText.setFillColor(sf::Color::White);
-	scoreText.setPosition(30,30);
+	scoreText.setPosition(100, 100);
 
 	// Timer
 	sf::Text timerText;
@@ -89,7 +89,7 @@ int main()
 	timerText.setString("Time Remaining: 0");
 	timerText.setCharacterSize(16);
 	timerText.setFillColor(sf::Color::White);
-	timerText.setPosition(gameWindow.getSize().x - timerText.getLocalBounds().width - 30, 30);
+	timerText.setPosition(gameWindow.getSize().x - timerText.getLocalBounds().width - 100, 100);
 
 	// Create a time value to store the total time limit for our game
 	sf::Time timeLimit = sf::seconds(10.0f);
@@ -196,7 +196,7 @@ int main()
 				// Set playing state to false
 				playing = false;
 				// Update the prompt
-				promptText.setString("Your final score was: "+std::to_string((int)timeRemaining.asSeconds()) +". Click the button to start a new game!");
+				promptText.setString("Your final score was: " + std::to_string(score) + ". Click the button to start a new game!");
 				// Play jingle
 				gameOverSound.play();
 			}
